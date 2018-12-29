@@ -1,3 +1,4 @@
+#   wap to read a list of words and return the length of the longest 1
 class ReturnLenOfLongest:
     def returnLen(self,l):
         max=len(l[0])

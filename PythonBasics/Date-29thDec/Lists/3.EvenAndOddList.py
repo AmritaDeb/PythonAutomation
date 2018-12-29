@@ -1,3 +1,4 @@
+# wap to put even and odd elements in a list into 2 different list
 class EvenAndOddList:
     def evenAndOdd(self,l):
         even=[]
