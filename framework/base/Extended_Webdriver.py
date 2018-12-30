@@ -38,7 +38,8 @@ class Extended_Webdriver():
         Returns:
             'WebDriver Instance'
         """
-        baseURL = "https://www.python.org/"
+        # baseURL = "https://www.python.org/"
+        baseURL = "https://www.amazon.in/"
         if self.browser == "iexplorer":
             # Set ie driver
             driver = webdriver.Ie()
@@ -48,7 +49,7 @@ class Extended_Webdriver():
             # Set chrome driver
             driver = webdriver.Chrome()
         else:
-            driver = webdriver.Firefox()
+            driver = webdriver.Chrome()
         # Setting Driver Implicit Time out for An Element
         driver.implicitly_wait(3)
         # Maximize the window
