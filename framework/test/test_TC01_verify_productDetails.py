@@ -21,6 +21,7 @@ class Test_productDetails(unittest.TestCase):
         self.wlp.goToWinterWear()
         self.wwlp.goTo1stProduct()
         # self.pdp.selectSize()
-        self.pdp.addToCart()
+        # print(self.pdp.getAvailibility())
+        # self.pdp.addToCart()
 
 
