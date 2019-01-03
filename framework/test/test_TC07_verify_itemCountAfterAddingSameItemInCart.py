@@ -6,11 +6,12 @@ from framework.pom.AmazonLoginPage import LoginPage
 from framework.pom.DeliveryAddressPage import DeliveryAddressPage
 from framework.pom.ShippingOptionPage import ShippingOptionPage
 from framework.pom.PaymentPage import PaymentPage
+import json
 import pytest
 import unittest
 
 @pytest.mark.usefixtures("oneTimeSetUp", "setUp")
-class Test_productDetails(unittest.TestCase):
+class Test_itemCount(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
     def classSetup(self, oneTimeSetUp):
@@ -19,21 +20,26 @@ class Test_productDetails(unittest.TestCase):
         self.pdp = ProductDetailsPage(self.driver)
         self.sp = ShoppingCartPage(self.driver)
         self.cp = CartPage(self.driver)
-        self.dap = DeliveryAddressPage(self.driver)
-        self.sop = ShippingOptionPage(self.driver)
-        self.pp = PaymentPage(self.driver)
 
     @pytest.mark.run(order=1)
     def test_goToPDP(self):
         self.hp.goToLogin()
-        self.lp.loginAmazon("8910945599","amazon")
+        credentials = json.loads(open('loginCredential.json').read())
+        username = credentials.get('username')
+        password = credentials.get('password')
+        # l = [i for i in credentials.values()]
+        self.lp.loginAmazon(username,password)
         self.hp.goToAmazonEcho()
-        actual=self.pdp.addToCart()
+        self.pdp.addToCart()
         self.sp.goToCart()
-        self.cp.proceedToCheckout()
-        self.dap.goToAdress()
-        self.sop.continueCheckout()
-        self.pp.countNoOfDeliveryOption()
+        before=self.cp.getTheQuantity()
+        self.driver.back()
+        self.driver.back()
+        self.pdp.addToCart()
+        self.sp.goToCart()
+        after=self.cp.getTheQuantity()
+        assert before<after,"Quantity is not incremented"
+
 
 
 
