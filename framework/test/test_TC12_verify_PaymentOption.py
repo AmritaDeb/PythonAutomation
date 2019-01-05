@@ -6,6 +6,7 @@ from framework.pom.AmazonLoginPage import LoginPage
 from framework.pom.DeliveryAddressPage import DeliveryAddressPage
 from framework.pom.ShippingOptionPage import ShippingOptionPage
 from framework.pom.PaymentPage import PaymentPage
+import json
 import pytest
 import unittest
 
@@ -26,14 +27,17 @@ class Test_productDetails(unittest.TestCase):
     @pytest.mark.run(order=1)
     def test_goToPDP(self):
         self.hp.goToLogin()
-        self.lp.loginAmazon("8910945599","amazon")
+        credentials=json.loads(open('loginCredential.json').read())
+        # print(credentials)
+        username = credentials.get('username')
+        password = credentials.get('password')
+        self.lp.loginAmazon(username,password)
         self.hp.goToAmazonEcho()
-        actual=self.pdp.addToCart()
+        self.pdp.addToCart()
         self.sp.goToCart()
         self.cp.proceedToCheckout()
         self.dap.goToAdress()
         self.sop.continueCheckout()
-        self.pp.countNoOfDeliveryOption()
 
 
 
